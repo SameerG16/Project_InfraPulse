@@ -1,0 +1,18 @@
+version: '3'
+services:
+  honeypot:
+    build: ./honeypot
+    ports:
+      - "2222:2222"
+
+  alerts:
+    build: ./alerts
+    environment:
+      - TELEGRAM_BOT_TOKEN
+      - TELEGRAM_CHAT_ID
+
+  elk:
+    build: ./elk
+    ports:
+      - "9200:9200"
+      - "5601:5601"
