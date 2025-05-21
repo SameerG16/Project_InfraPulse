@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegram-alerts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegram
+  template:
+    metadata:
+      labels:
+        app: telegram
+    spec:
+      containers:
+      - name: telegram
+        image: your-dockerhub-username/infra-alerts
+        env:
+        - name: TELEGRAM_BOT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: telegram-secret
+              key: bot_token
+        - name: TELEGRAM_CHAT_ID
+          valueFrom:
+            secretKeyRef:
+              name: telegram-secret
+              key: chat_id
